@@ -3,7 +3,7 @@
 
 ## 使用方法
 ### 第一步
-需要`python`环境，然后在cmd运行以下代码，安装需要的库：
+需要`python`环境，然后在`cmd`或者`PowerShell`运行以下代码，安装需要的库：
 ```python3
 pip install icalendar
 ```
@@ -12,7 +12,7 @@ pip install icalendar
 ![Alt text](https://github.com/Guest-Liang/BUPT-iOSCalendar-Excel/blob/main/ScrennShots/GetExcelFile.png)
 
 ### 第三步
-下载py文件，将Excel文件和py文件放在同一个目录下，运行py文件
+下载`py文件`，将`Excel`文件和`py文件`放在同一个目录下，运行`py文件`
 
 ### 第四步
 得到的ics文件导入Apple设备中即可使用
