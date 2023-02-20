@@ -3,7 +3,7 @@ import re
 from icalendar import Calendar, Event
 import openpyxl
 
-print("程序初始化中……")
+print("程序初始化中………")
 #定义课程开始时间
 StartTime=[datetime.time(8, 0, 0), datetime.time(8, 50, 0), datetime.time(9, 50, 0), 
            datetime.time(10, 40, 0), datetime.time(11, 30, 0), datetime.time(13, 00, 0), 
@@ -25,7 +25,8 @@ filepath="./学生个人课表_"+userid+".xlsx"
 WorkBook=openpyxl.load_workbook(filepath)
 Sheet=WorkBook.active
 
-print("将要处理的课程表所属人：", end="")
+print("-------------------------")
+print("课程表所属人：", end="")
 Name=Sheet['A1'].value.replace("北京邮电大学 ","").replace(" 学生个人课表","")
 print(Name)
 
@@ -44,7 +45,7 @@ print(Major)
 print("学院：",end="")
 Academy=Sheet['A2'].value[66:70]
 print(Academy)
-
+print("-------------------------")
 
 #处理信息
 #找到字符串中某个字的索引
@@ -56,7 +57,7 @@ Start=datetime.datetime.strptime(input("输入学期的第一周的周一日期�
 while Start.isoweekday() != 1:
     Start=datetime.datetime.strptime(input("日期并非周一！请以YYYY-MM-DD格式输入\n"), '%Y-%m-%d').date()
 
-    
+
 
 
 #制作ics文件
@@ -64,5 +65,11 @@ def MakeicsFile():
     cal = Calendar()
     cal.add('X-WR-CALNAME', SchoolYear)
     cal.add('X-APPLE-CALENDAR-COLOR', '#E1FFFF')
-    cal.add('X-WR-TIMEZONE', 'Asia/Beijing')
+    cal.add('X-WR-TIMEZONE', 'Asia/Shanghai')
     cal.add('VERSION', '2.0')
+    try:
+        with open('TimeTable.ics', 'wb') as file:
+            file.write(cal.to_ical())
+            print('[Success]')
+    except Exception:
+        print("生成文件失败，请重试")
