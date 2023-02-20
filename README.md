@@ -15,4 +15,4 @@ pip install icalendar
 下载`py文件`，将`Excel`文件和`py文件`放在同一个目录下，运行`py文件`
 
 ### 第四步
-得到的ics文件导入Apple设备中即可使用
+得到的`ics文件`导入Apple设备中即可使用
