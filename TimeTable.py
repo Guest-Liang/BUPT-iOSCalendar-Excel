@@ -75,7 +75,9 @@ for row in range(4, 18):
                     Classroom=Sheet.cell(row, column).value[CellBR[i]:CellBR[i+1]]
                 case 4:
                     LessonNum=Sheet.cell(row, column).value[CellBR[i]:CellBR[i+1]]
+            
             print(Sheet.cell(row, column).value[CellBR[i]:CellBR[i+1]], end="")
+
             if i==len(CellBR)-2:
                 print(f"{Sheet.cell(row, column).value[CellBR[-1]:]}", end="")
         print(f"\n-----------周{column-1}第{row-3}节课程拆分-----------", end="")
@@ -85,7 +87,41 @@ for row in range(4, 18):
 
 
 
-'''#制作ics文件
+
+def add_event(cal, SUMMARY, DTSTART, DTEND):
+    """
+    向Calendar日历对象添加事件的方法
+    :param cal: calender日历实例
+    :param SUMMARY: 事件名
+    :param DTSTART: 事件开始时间
+    :param DTEND: 时间结束时间
+    :return:
+    """
+    time_format = "TZID=Asia/Shanghai:{date.year}{date.month:0>2d}{date.day:0>2d}T{date.hour:0>2d}{date.minute:0>2d}00"
+    dt_start = time_format.format(date=DTSTART)
+    dt_end = time_format.format(date=DTEND)
+    CreateTime = datetime.datetime.today().strftime("%Y%m%dT%H%M%SZ")
+    cal.add_event(
+        SUMMARY=SUMMARY,
+        DTSTART=dt_start,
+        DTEND=dt_end,
+        DTSTAMP=CreateTime,
+        UID="{}-11@appgenix-software.com".format(CreateTime),
+        SEQUENCE="0",
+        CREATED=CreateTime,
+        LAST_MODIFIED=CreateTime,
+        STATUS="CONFIRMED",
+    )
+
+
+
+
+#制作ics文件
+MyCalendar = Calendar(calendar_name=f"{SchoolYear}课程表")
+add_event(MyCalendar,
+        SUMMARY="测试",
+        DTSTART=datetime.datetime(year=2023,month=2,day=20,hour=21,minute=20,second=00),
+        DTEND=datetime.datetime(year=2023,month=2,day=20,hour=21,minute=30,second=00),)
 def MakeicsFile():
     cal = Calendar()
     cal.add('X-WR-CALNAME', SchoolYear)
@@ -97,4 +133,4 @@ def MakeicsFile():
             file.write(cal.to_ical())
             print('[Success]')
     except Exception:
-        print("生成文件失败，请重试")'''
+        print("生成文件失败，请重试")
