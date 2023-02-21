@@ -49,8 +49,6 @@ print("-------------------------")
 
 
 #处理信息
-
-
 '''
 #输入学期的第一周的周一日期
 Start=datetime.datetime.strptime(input("输入学期的第一周的周一日期，以YYYY-MM-DD格式\n"), '%Y-%m-%d').date()
@@ -61,23 +59,16 @@ print("正在处理，请稍等")
 StartDay=datetime.date(2023, 2, 20)
 
 
-'''#按行拆分单元格
-BR=GetElementIndex("\n", Sheet['C4'].value)#获取换行符位置
-for i in range(len(BR)-1):
-    print(Sheet['C4'].value[BR[i]:BR[i+1]], end="")'''
-
-
-
-
-
-
 
 for row in range(4, 18):
     for column in range(2, 9):
         CellBR=GetElementIndex("\n", Sheet.cell(row, column).value)
         for i in range(len(CellBR)-1):
             print(Sheet.cell(row, column).value[CellBR[i]:CellBR[i+1]], end="")
-        print(f"\n----------第{row}行第{column}列课程拆分-----------")
+            if i==len(CellBR)-2:
+                print(f"{Sheet.cell(row, column).value[CellBR[-1]:]}", end="")
+        print(f"\n----------周{column-1}第{row-3}节课程拆分-----------", end="")
+        del CellBR
 
 
 
