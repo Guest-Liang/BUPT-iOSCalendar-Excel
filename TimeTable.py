@@ -17,9 +17,26 @@ EndTime=[datetime.time(8, 45, 0), datetime.time(9, 35, 0), datetime.time(10, 35,
          datetime.time(14, 35, 0), datetime.time(15, 30, 0), datetime.time(16, 25, 0), 
          datetime.time(17, 20, 0), datetime.time(18, 10, 0), datetime.time(19, 15, 0), 
          datetime.time(20, 5, 0), datetime.time(20, 55, 0)]
-#找到字符串中某个关键值的所有索引
+#找到字符串中某个关键值的所有索引，存放在list(int)中
 def GetElementIndex(char, string):
     return [idx.start() for idx in re.finditer(char, string)]
+
+#将上课周数转为list(int)
+def ChangeIntoList_int(string):
+    if ("-" in string):
+        HyphenIndex=GetElementIndex("-", string)
+        string=string.replace("-",",")
+        List=string.split(",")
+        for i in range(len(HyphenIndex)):
+            if(int(string[HyphenIndex[i]+1])-int(string[HyphenIndex[i]-1])>1):
+                for j in range(int(string[HyphenIndex[i]-1])+1, int(string[HyphenIndex[i]+1])):
+                    List.extend(f"{j}")
+        List=list(map(int, List))
+        List.sort(reverse = False)
+    else:
+        List=string.split(",")
+        List=list(map(int, List))
+    return List
 
 
 #获取学号，打开xlsx文件
