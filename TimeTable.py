@@ -27,40 +27,65 @@ Sheet=WorkBook.active
 
 print("-------------------------")
 print("课程表所属人：", end="")
-Name=Sheet['A1'].value.replace("北京邮电大学 ","").replace(" 学生个人课表","")
-print(Name)
+print(Sheet['A1'].value.replace("北京邮电大学 ","").replace(" 学生个人课表",""))
 
 print("学年：",end="")
-SchoolYear=Sheet['A2'].value[5:16]
-print(SchoolYear)
+print(Sheet['A2'].value[5:16])
 
 print("班级：",end="")
-TheClass=Sheet['A2'].value[27:37]
-print(TheClass)
+print(Sheet['A2'].value[27:37])
 
 print("专业：",end="")
-Major=Sheet['A2'].value[48:55]
-print(Major)
+print(Sheet['A2'].value[48:55])
 
 print("学院：",end="")
-Academy=Sheet['A2'].value[66:70]
-print(Academy)
+print(Sheet['A2'].value[66:70])
 print("-------------------------")
+
 
 #处理信息
 #找到字符串中某个字的索引
-def GetElementIndex(string, char):
+def GetElementIndex(char, string):
     return [idx.start() for idx in re.finditer(char, string)]
 
+
+'''
 #输入学期的第一周的周一日期
 Start=datetime.datetime.strptime(input("输入学期的第一周的周一日期，以YYYY-MM-DD格式\n"), '%Y-%m-%d').date()
 while Start.isoweekday() != 1:
     Start=datetime.datetime.strptime(input("日期并非周一！请以YYYY-MM-DD格式输入\n"), '%Y-%m-%d').date()
+'''
+
+
+Start=datetime.datetime.date(2023, 2, 20)
 
 
 
 
-#制作ics文件
+
+'''找【节】，数几节课
+找【换行符】 
+'''
+
+for row in range(4:17):
+    for column in range(2:8):
+        for DailyCount in GetElementIndex("节", Sheet):
+
+
+
+text=re.search("\n", Sheet["B4"].value)
+
+s='a good boy, a good girl. a bad man.'
+f=re.finditer('good',s)
+print(f)
+
+
+
+
+
+
+
+'''#制作ics文件
 def MakeicsFile():
     cal = Calendar()
     cal.add('X-WR-CALNAME', SchoolYear)
@@ -72,4 +97,4 @@ def MakeicsFile():
             file.write(cal.to_ical())
             print('[Success]')
     except Exception:
-        print("生成文件失败，请重试")
+        print("生成文件失败，请重试")'''
