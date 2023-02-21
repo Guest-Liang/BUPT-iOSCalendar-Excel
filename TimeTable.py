@@ -64,10 +64,21 @@ for row in range(4, 18):
     for column in range(2, 9):
         CellBR=GetElementIndex("\n", Sheet.cell(row, column).value)
         for i in range(len(CellBR)-1):
+            match i%5:
+                case 0:
+                    Course=Sheet.cell(row, column).value[CellBR[i]:CellBR[i+1]]
+                case 1:
+                    TeacherName=Sheet.cell(row, column).value[CellBR[i]:CellBR[i+1]]
+                case 2:
+                    ClassWeeks=Sheet.cell(row, column).value[CellBR[i]:CellBR[i+1]]
+                case 3:
+                    Classroom=Sheet.cell(row, column).value[CellBR[i]:CellBR[i+1]]
+                case 4:
+                    LessonNum=Sheet.cell(row, column).value[CellBR[i]:CellBR[i+1]]
             print(Sheet.cell(row, column).value[CellBR[i]:CellBR[i+1]], end="")
             if i==len(CellBR)-2:
                 print(f"{Sheet.cell(row, column).value[CellBR[-1]:]}", end="")
-        print(f"\n----------周{column-1}第{row-3}节课程拆分-----------", end="")
+        print(f"\n-----------周{column-1}第{row-3}节课程拆分-----------", end="")
         del CellBR
 
 
