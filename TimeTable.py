@@ -16,13 +16,16 @@ EndTime=[datetime.time(8, 45, 0), datetime.time(9, 35, 0), datetime.time(10, 35,
          datetime.time(14, 35, 0), datetime.time(15, 30, 0), datetime.time(16, 25, 0), 
          datetime.time(17, 20, 0), datetime.time(18, 10, 0), datetime.time(19, 15, 0), 
          datetime.time(20, 5, 0), datetime.time(20, 55, 0)]
+#找到字符串中某个字的索引
+def GetElementIndex(char, string):
+    return [idx.start() for idx in re.finditer(char, string)]
+
 
 
 #获取学号，打开xlsx文件
 #userid=input('请输入学号：')
 userid='2021212702'
-filepath="./学生个人课表_"+userid+".xlsx"
-WorkBook=openpyxl.load_workbook(filepath)
+WorkBook=openpyxl.load_workbook(filename=f"./学生个人课表_{userid}.xlsx")
 Sheet=WorkBook.active
 
 print("-------------------------")
@@ -31,6 +34,7 @@ print(Sheet['A1'].value.replace("北京邮电大学 ","").replace(" 学生个人
 
 print("学年：",end="")
 print(Sheet['A2'].value[5:16])
+SchoolYear=Sheet['A2'].value[5:16]
 
 print("班级：",end="")
 print(Sheet['A2'].value[27:37])
@@ -43,10 +47,8 @@ print(Sheet['A2'].value[66:70])
 print("-------------------------")
 
 
+
 #处理信息
-#找到字符串中某个字的索引
-def GetElementIndex(char, string):
-    return [idx.start() for idx in re.finditer(char, string)]
 
 
 '''
@@ -54,34 +56,25 @@ def GetElementIndex(char, string):
 Start=datetime.datetime.strptime(input("输入学期的第一周的周一日期，以YYYY-MM-DD格式\n"), '%Y-%m-%d').date()
 while Start.isoweekday() != 1:
     Start=datetime.datetime.strptime(input("日期并非周一！请以YYYY-MM-DD格式输入\n"), '%Y-%m-%d').date()
+print("正在处理，请稍等")
 '''
-
-
-Start=datetime.datetime.date(2023, 2, 20)
-
+StartDay=datetime.date(2023, 2, 20)
 
 
 
+#按行拆分单元格
+BR=GetElementIndex("\n", Sheet['C4'].value)#获取换行符位置
+for i in range(len(BR)-1):
+    print(Sheet['C4'].value[BR[i]:BR[i+1]], end="")
 
-'''找【节】，数几节课
-找【换行符】 
+
+
+
 '''
-
 for row in range(4:17):
     for column in range(2:8):
-        for DailyCount in GetElementIndex("节", Sheet):
-
-
-
-text=re.search("\n", Sheet["B4"].value)
-
-s='a good boy, a good girl. a bad man.'
-f=re.finditer('good',s)
-print(f)
-
-
-
-
+        for DailyCount in GetElementIndex("\n", Sheet):
+'''
 
 
 
