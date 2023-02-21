@@ -1,7 +1,8 @@
 import datetime
 import re
-from icalendar import Calendar, Event
+from icalendar import Calendar, Event, Alarm
 import openpyxl
+import time
 
 print("程序初始化中………")
 #定义课程开始时间
@@ -21,13 +22,13 @@ def GetElementIndex(char, string):
     return [idx.start() for idx in re.finditer(char, string)]
 
 
-
 #获取学号，打开xlsx文件
-#userid=input('请输入学号：')
+#userid=input('请输入学号，确保和xlsx文件名中的学号一致：')
 userid='2021212702'
 WorkBook=openpyxl.load_workbook(filename=f"./学生个人课表_{userid}.xlsx")
 Sheet=WorkBook.active
 
+print("您的信息为：")
 print("-------------------------")
 print("课程表所属人：", end="")
 print(Sheet['A1'].value.replace("北京邮电大学 ","").replace(" 学生个人课表",""))
@@ -46,7 +47,7 @@ print(Sheet['A2'].value[48:55])
 print("学院：",end="")
 print(Sheet['A2'].value[66:70])
 print("-------------------------")
-
+time.sleep(3)
 
 
 '''
@@ -59,11 +60,11 @@ print("正在处理，请稍等")
 StartDay=datetime.date(2023, 2, 20)
 
 #制作
-Cal = Calendar()
-Cal.add('X-WR-CALNAME', SchoolYear)
-Cal.add('X-APPLE-CALENDAR-COLOR', '#E1FFFF')
-Cal.add('X-WR-TIMEZONE', 'Asia/Shanghai')
-Cal.add('VERSION', '2.0')
+MyCalendar = Calendar()
+MyCalendar.add('X-WR-CALNAME', SchoolYear)
+MyCalendar.add('X-APPLE-CALENDAR-COLOR', '#E1FFFF')
+MyCalendar.add('X-WR-TIMEZONE', 'Asia/Shanghai')
+MyCalendar.add('VERSION', '2.0')
 for row in range(4, 18):
     for column in range(2, 9):
         CellBR=GetElementIndex("\n", Sheet.cell(row, column).value)
@@ -83,62 +84,23 @@ for row in range(4, 18):
             if i==len(CellBR)-2:
                 LessonNum=Sheet.cell(row, column).value[CellBR[-1]:]
                 #print(f"{Sheet.cell(row, column).value[CellBR[-1]:]}", end="")
+            if i/5==0:
+                MyEvent=Event()
+                MyEvent.add('UID', f'BUPTCalendar@{StudentName}&{datetime.datetime.now().timestamp()}')
+                MyEvent.add('SUMMARY', Course)
+                #MyEvent.add('DTSTART', StartTime[row-4])
+                #MyEvent.add('DTEND', EndTime[i-4])
 
-        event=Event()
-        event.add('uid', f'BUPT@{StudentName}&{datetime.datetime.now().timestamp()}')
-        # event.add('dtstart', dtstart)
-        # event.add('dtend', dtend)
-        # event.add('summary', lesson['name'])
-
-
-        # print(f"\n-----------周{column-1}第{row-3}节课程拆分-----------", end="")
+                MyAlarm=Alarm()
+                MyAlarm.add('TRIGGER', "-PT10M")
+                MyAlarm.add('ACTION', "DISPLAY")
+                MyAlarm.add('DESCRIPTION', Course)
+                MyEvent.add_component(MyAlarm)
+                MyCalendar.add_component(MyEvent)
+                del MyAlarm
+                del MyEvent
+                print(f"\n-----------周{column-1}第{row-3}节课程导入完成-----------", end="")
         del CellBR
-
-
-
-
-
-
-
-
-def AddEvent(Cal, SUMMARY, DTSTART, DTEND):
-    """
-    向Calendar日历对象添加事件的方法
-    :param cal: calender日历实例
-    :param SUMMARY: 事件名
-    :param DTSTART: 事件开始时间
-    :param DTEND: 时间结束时间
-    :return:
-    """
-    time_format = "TZID=Asia/Shanghai:{date.year}{date.month:0>2d}{date.day:0>2d}T{date.hour:0>2d}{date.minute:0>2d}00"
-    dt_start = time_format.format(date=DTSTART)
-    dt_end = time_format.format(date=DTEND)
-    CreateTime = datetime.datetime.today().strftime("%Y%m%dT%H%M%SZ")
-    Cal.add_event(
-        SUMMARY=SUMMARY,
-        DTSTART=dt_start,
-        DTEND=dt_end,
-        DTSTAMP=CreateTime,
-        SEQUENCE="0",
-        CREATED=CreateTime,
-        LAST_MODIFIED=CreateTime,
-        STATUS="CONFIRMED",
-    )
-
-
-
-
-#制作ics文件
-MyCalendar = Calendar(CalendarName=f"{SchoolYear}课程表")
-AddEvent(MyCalendar,
-        SUMMARY="测试",
-        DTSTART=datetime.datetime(year=2023,month=2,day=20,hour=21,minute=20,second=00),
-        DTEND=datetime.datetime(year=2023,month=2,day=20,hour=21,minute=30,second=00),)
-
-
-
-
-
 
 
 '''
