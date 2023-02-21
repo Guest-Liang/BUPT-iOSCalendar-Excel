@@ -16,7 +16,7 @@ EndTime=[datetime.time(8, 45, 0), datetime.time(9, 35, 0), datetime.time(10, 35,
          datetime.time(14, 35, 0), datetime.time(15, 30, 0), datetime.time(16, 25, 0), 
          datetime.time(17, 20, 0), datetime.time(18, 10, 0), datetime.time(19, 15, 0), 
          datetime.time(20, 5, 0), datetime.time(20, 55, 0)]
-#找到字符串中某个字的索引
+#找到字符串中某个关键值的所有索引
 def GetElementIndex(char, string):
     return [idx.start() for idx in re.finditer(char, string)]
 
@@ -31,6 +31,7 @@ Sheet=WorkBook.active
 print("-------------------------")
 print("课程表所属人：", end="")
 print(Sheet['A1'].value.replace("北京邮电大学 ","").replace(" 学生个人课表",""))
+StudentName=Sheet['A1'].value.replace("北京邮电大学 ","").replace(" 学生个人课表","")
 
 print("学年：",end="")
 print(Sheet['A2'].value[5:16])
@@ -48,7 +49,6 @@ print("-------------------------")
 
 
 
-#处理信息
 '''
 #输入学期的第一周的周一日期
 Start=datetime.datetime.strptime(input("输入学期的第一周的周一日期，以YYYY-MM-DD格式\n"), '%Y-%m-%d').date()
@@ -58,8 +58,12 @@ print("正在处理，请稍等")
 '''
 StartDay=datetime.date(2023, 2, 20)
 
-
-
+#制作
+Cal = Calendar()
+Cal.add('X-WR-CALNAME', SchoolYear)
+Cal.add('X-APPLE-CALENDAR-COLOR', '#E1FFFF')
+Cal.add('X-WR-TIMEZONE', 'Asia/Shanghai')
+Cal.add('VERSION', '2.0')
 for row in range(4, 18):
     for column in range(2, 9):
         CellBR=GetElementIndex("\n", Sheet.cell(row, column).value)
@@ -75,12 +79,19 @@ for row in range(4, 18):
                     Classroom=Sheet.cell(row, column).value[CellBR[i]:CellBR[i+1]]
                 case 4:
                     LessonNum=Sheet.cell(row, column).value[CellBR[i]:CellBR[i+1]]
-            
-            print(Sheet.cell(row, column).value[CellBR[i]:CellBR[i+1]], end="")
-
+            #print(Sheet.cell(row, column).value[CellBR[i]:CellBR[i+1]], end="")
             if i==len(CellBR)-2:
-                print(f"{Sheet.cell(row, column).value[CellBR[-1]:]}", end="")
-        print(f"\n-----------周{column-1}第{row-3}节课程拆分-----------", end="")
+                LessonNum=Sheet.cell(row, column).value[CellBR[-1]:]
+                #print(f"{Sheet.cell(row, column).value[CellBR[-1]:]}", end="")
+
+        event=Event()
+        event.add('uid', f'BUPT@{StudentName}&{datetime.datetime.now().timestamp()}')
+        # event.add('dtstart', dtstart)
+        # event.add('dtend', dtend)
+        # event.add('summary', lesson['name'])
+
+
+        # print(f"\n-----------周{column-1}第{row-3}节课程拆分-----------", end="")
         del CellBR
 
 
@@ -88,7 +99,9 @@ for row in range(4, 18):
 
 
 
-def add_event(cal, SUMMARY, DTSTART, DTEND):
+
+
+def AddEvent(Cal, SUMMARY, DTSTART, DTEND):
     """
     向Calendar日历对象添加事件的方法
     :param cal: calender日历实例
@@ -101,12 +114,11 @@ def add_event(cal, SUMMARY, DTSTART, DTEND):
     dt_start = time_format.format(date=DTSTART)
     dt_end = time_format.format(date=DTEND)
     CreateTime = datetime.datetime.today().strftime("%Y%m%dT%H%M%SZ")
-    cal.add_event(
+    Cal.add_event(
         SUMMARY=SUMMARY,
         DTSTART=dt_start,
         DTEND=dt_end,
         DTSTAMP=CreateTime,
-        UID="{}-11@appgenix-software.com".format(CreateTime),
         SEQUENCE="0",
         CREATED=CreateTime,
         LAST_MODIFIED=CreateTime,
@@ -117,20 +129,23 @@ def add_event(cal, SUMMARY, DTSTART, DTEND):
 
 
 #制作ics文件
-MyCalendar = Calendar(calendar_name=f"{SchoolYear}课程表")
-add_event(MyCalendar,
+MyCalendar = Calendar(CalendarName=f"{SchoolYear}课程表")
+AddEvent(MyCalendar,
         SUMMARY="测试",
         DTSTART=datetime.datetime(year=2023,month=2,day=20,hour=21,minute=20,second=00),
         DTEND=datetime.datetime(year=2023,month=2,day=20,hour=21,minute=30,second=00),)
-def MakeicsFile():
-    cal = Calendar()
-    cal.add('X-WR-CALNAME', SchoolYear)
-    cal.add('X-APPLE-CALENDAR-COLOR', '#E1FFFF')
-    cal.add('X-WR-TIMEZONE', 'Asia/Shanghai')
-    cal.add('VERSION', '2.0')
+
+
+
+
+
+
+
+'''
     try:
         with open('TimeTable.ics', 'wb') as file:
             file.write(cal.to_ical())
             print('[Success]')
     except Exception:
         print("生成文件失败，请重试")
+'''    
