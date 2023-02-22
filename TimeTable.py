@@ -2,7 +2,6 @@ import datetime
 import re
 import icalendar
 import openpyxl
-import time
 
 print("程序初始化中………")
 #定义课程开始时间
@@ -24,15 +23,22 @@ def GetElementIndex(char, string):
 #将上课周数转为list(int)
 def ChangeIntoList_int(string):
     if ("-" in string):
-        HyphenIndex=GetElementIndex("-", string)
+        newstring=re.sub(r'[0-9]+', '', string)
         string=string.replace("-",",")
         List=string.split(",")
-        for i in range(len(HyphenIndex)):
-            if(int(string[HyphenIndex[i]+1])-int(string[HyphenIndex[i]-1])>1):
-                for j in range(int(string[HyphenIndex[i]-1])+1, int(string[HyphenIndex[i]+1])):
-                    List.extend(f"{j}")
         List=list(map(int, List))
-        List.sort(reverse = False)
+        HyphenIndex=GetElementIndex("-", newstring)
+        if len(HyphenIndex)==1:
+            if(List[HyphenIndex[0]+1]-List[HyphenIndex[0]]>1):
+                for j in range(List[HyphenIndex[0]]+1,List[HyphenIndex[0]+1]):
+                    List.append(j)
+            List.sort(reverse = False)
+        else:
+            for i in range(len(HyphenIndex)-1):
+                if(List[HyphenIndex[i]+1]-List[HyphenIndex[i]]>1):
+                    for j in range(List[HyphenIndex[i]]+1,List[HyphenIndex[i]+1]):
+                        List.append(j)
+                List.sort(reverse = False)        
     else:
         List=string.split(",")
         List=list(map(int, List))
@@ -64,7 +70,6 @@ print(Sheet['A2'].value[48:55])
 print("学院：",end="")
 print(Sheet['A2'].value[66:70])
 print("-------------------------")
-time.sleep(1)
 
 
 '''
@@ -74,52 +79,50 @@ while Start.isoweekday() != 1:
     Start=datetime.datetime.strptime(input("日期并非周一！请以YYYY-MM-DD格式输入\n"), '%Y-%m-%d').date()
 print("正在处理，请稍等")
 '''
-StartDay=datetime.date(2023, 2, 20)
+StartDate=datetime.date(2023, 2, 20)
 
 #制作
 MyCalendar = icalendar.Calendar()
-MyCalendar.add('X-WR-CALNAME', SchoolYear) #新增日历名称，默认为学年
+MyCalendar.add('X-WR-CALNAME', f'{SchoolYear}') #新增日历名称，默认为学年
 MyCalendar.add('X-APPLE-CALENDAR-COLOR', '#E1FFFF') #日历颜色，可自己更改
 MyCalendar.add('X-WR-TIMEZONE', 'Asia/Shanghai')
 MyCalendar.add('VERSION', '2.0')
-for row in range(4, 18):
-    for column in range(2, 9):
-        CellBR=GetElementIndex("\n", Sheet.cell(row, column).value)
-        for i in range(len(CellBR)-1):
-            match i%5:
-                case 0:
-                    Course=Sheet.cell(row, column).value[CellBR[i]:CellBR[i+1]]
-                case 1:
-                    TeacherName=Sheet.cell(row, column).value[CellBR[i]:CellBR[i+1]]
-                case 2:
-                    ClassWeeks=Sheet.cell(row, column).value[CellBR[i]:CellBR[i+1]]
-                case 3:
-                    Classroom=Sheet.cell(row, column).value[CellBR[i]:CellBR[i+1]]
-                case 4:
-                    LessonNum=Sheet.cell(row, column).value[CellBR[i]:CellBR[i+1]]
-            #print(Sheet.cell(row, column).value[CellBR[i]:CellBR[i+1]], end="")
-            if i==len(CellBR)-2:
-                LessonNum=Sheet.cell(row, column).value[CellBR[-1]:]
-                #print(Sheet.cell(row, column).value[CellBR[-1]:], end="")
-            if (i!=0 and i%5==0):
-                ListClassWeeks=ChangeIntoList_int(ClassWeeks.replace("[周]",""))
-                for i in range(len(ListClassWeeks)):
-                    MyEvent=icalendar.Event()
-                    MyEvent.add('UID', f'BUPTCalendar@{StudentName}&{datetime.datetime.now().timestamp()}')
-                    MyEvent.add('SUMMARY', Course)
-                    MyEvent.add('DTSTART', datetime.datetime.combine(StartDay+datetime.timedelta(weeks=ListClassWeeks[i]-1), StartTime[row-4]))
-                    MyEvent.add('DTEND', datetime.datetime.combine(StartDay+datetime.timedelta(weeks=ListClassWeeks[i]-1), EndTime[row-4]))
-                    MyEvent.add('DESCRIPTION', TeacherName)
-                    MyAlarm=icalendar.Alarm()
-                    MyAlarm.add('trigger', datetime.timedelta(minutes=-10)) #提前10分钟提醒
-                    MyAlarm.add('ACTION', "DISPLAY") #通知提醒
-                    MyAlarm.add('DESCRIPTION', Course) #提醒内容：课程名称
-                    MyEvent.add_component(MyAlarm)
-                    MyCalendar.add_component(MyEvent)
-                    print(f"添加周{column-1}第{row-3}节课的第{ListClassWeeks[i]}周课表成功")
-                    del MyAlarm
-                    del MyEvent
-                print(f"\n-----------周{column-1}第{row-3}节课程导入完成-----------", end="")
+for Column in range(2, 9):
+    for Row in range(4, 18):
+        CellBR=GetElementIndex("\n", Sheet.cell(row=Row, column=Column).value)
+        for i in range(int(len(CellBR)/5)):
+            Course=Sheet.cell(row=Row, column=Column).value[CellBR[5*i]+1:CellBR[5*i+1]]
+            TeacherName=Sheet.cell(row=Row, column=Column).value[CellBR[5*i+1]+1:CellBR[5*i+2]]
+            ClassWeeks=Sheet.cell(row=Row, column=Column).value[CellBR[5*i+2]+1:CellBR[5*i+3]]
+            Classroom=Sheet.cell(row=Row, column=Column).value[CellBR[5*i+3]+1:CellBR[5*i+4]]
+            if i==int(len(CellBR)/5)-1:
+                LessonNum=Sheet.cell(row=Row, column=Column).value[CellBR[5*i+4]+1:]
+            else:
+                LessonNum=Sheet.cell(row=Row, column=Column).value[CellBR[5*i+4]+1:CellBR[5*i+5]]
+            ListClassWeeks=ChangeIntoList_int(ClassWeeks.replace("[周]",""))            
+            for j in range(len(ListClassWeeks)):
+                MyEvent=icalendar.Event()
+                MyEvent.add('UID', f'BUPTCalendar@{StudentName}&{datetime.datetime.now().timestamp()}')
+                MyEvent.add('SUMMARY', Course+'\n'+Classroom)
+                MyEvent.add('DTSTART', datetime.datetime.combine(StartDate+datetime.timedelta(weeks=ListClassWeeks[j]-1)+datetime.timedelta(days=Column-2), StartTime[Row-4]))
+                MyEvent.add('DTEND', datetime.datetime.combine(StartDate+datetime.timedelta(weeks=ListClassWeeks[j]-1)+datetime.timedelta(days=Column-2), EndTime[Row-4]))
+                MyEvent.add('DESCRIPTION', TeacherName) #教师姓名写在备注里
+                MyAlarm=icalendar.Alarm()
+                MyAlarm.add('trigger', datetime.timedelta(minutes=-10)) #提前10分钟提醒
+                MyAlarm.add('ACTION', "DISPLAY") #通知提醒
+                MyAlarm.add('DESCRIPTION', Course) #提醒内容：课程名称
+                MyEvent.add_component(MyAlarm)
+                MyCalendar.add_component(MyEvent)
+                print(f"添加周{Column-1}第{Row-3}节课的第{ListClassWeeks[j]}周课表成功")
+                del MyAlarm
+                del MyEvent
+            del TeacherName
+            del ClassWeeks
+            del Classroom
+            del LessonNum
+            del Course
+            del ListClassWeeks
+            print(f"-----------周{Column-1}第{Row-3}节课程导入完成-----------")
         del CellBR
 
 try:
