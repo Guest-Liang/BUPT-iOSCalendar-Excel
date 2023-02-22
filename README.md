@@ -3,19 +3,25 @@
 
 ## 使用方法
 ### 第一步
-需要`python`环境，然后在`cmd`或者`PowerShell`运行以下代码，安装需要的库：
+需要`>python3.10`环境，并且配置好环境变量等，确保`Powershell`中输入`python`能出现版本号并进入python环境。如果已经配置好，在`cmd`或者`PowerShell`运行以下代码，安装需要的库：
 ```python3
 pip install icalendar
 pip install openpyxl
 ```
 ### 第二步
-从你的北邮教务里下载Excel版个人课程表，文件名为“学生个人课表_{你的学号}.xls”
-然后在Excel中将其另存为为xlsx格式，保存后你的文件名应该是“学生个人课表_{你的学号}.xlsx”
-![Alt text](https://github.com/Guest-Liang/BUPT-iOSCalendar-Excel/blob/main/ScrennShots/GetExcelFile.png)
-
+从你的北邮教务里下载Excel版个人课程表，文件名为“学生个人课表_{你的学号}.xls”。在Excel中将其另存为为xlsx格式，保存后你的文件名应该是“学生个人课表_{你的学号}.xlsx”
+<img src="https://github.com/Guest-Liang/BUPT-iOSCalendar-Excel/blob/main/ScrennShots/GetExcelFile.png" width="500px">
 
 ### 第三步
-下载`py文件`，将`Excel`文件和`py文件`放在同一个目录下，运行`py文件`
+下载`TimeTable.py`文件，将`学生个人课表_{你的学号}.xlsx`文件和`TimeTable.py`文件放在同一个目录下，在空白处右键“在终端中打开”，或者打开`Powershell`，进入管理员模式，执行
+```python3
+python TimeTable.py
+```
+<img src="https://github.com/Guest-Liang/BUPT-iOSCalendar-Excel/blob/main/ScrennShots/ExecuteTheCommand.png" width="1000px">
+
+看到最后的Success就说明成功了，ics文件生成在当前目录下
+<img src="https://github.com/Guest-Liang/BUPT-iOSCalendar-Excel/blob/main/ScrennShots/Success.png" width="800px">
+
 
 ### 第四步
-得到的`ics文件`导入Apple设备中即可使用
+得到的`ics文件`导入Apple设备中即可使用。
