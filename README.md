@@ -17,10 +17,10 @@ pip install openpyxl
 ```python3
 python TimeTable.py
 ```
-<img src="https://github.com/Guest-Liang/BUPT-iOSCalendar-Excel/blob/main/ScrennShots/ExecuteTheCommand.png" width="1000px">
+<img src="https://github.com/Guest-Liang/BUPT-iOSCalendar-Excel/blob/main/ScrennShots/ExecuteTheCommand.png" width="500px">
 
 看到最后的Success就说明成功了，ics文件生成在当前目录下
-<img src="https://github.com/Guest-Liang/BUPT-iOSCalendar-Excel/blob/main/ScrennShots/Success.png" width="800px">
+<img src="https://github.com/Guest-Liang/BUPT-iOSCalendar-Excel/blob/main/ScrennShots/Success.png" width="500px">
 
 
 ### 第四步
