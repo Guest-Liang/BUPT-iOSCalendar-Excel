@@ -1,2 +1,0 @@
-此版本尚未修复由于换行符导致的标题显示空白问题
-This version will cause the blank in title due to line break.
