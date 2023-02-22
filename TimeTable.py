@@ -3,7 +3,6 @@ import re
 import icalendar
 import openpyxl
 
-print("程序初始化中………")
 #定义课程开始时间
 StartTime=[datetime.time(8, 0, 0), datetime.time(8, 50, 0), datetime.time(9, 50, 0), 
            datetime.time(10, 40, 0), datetime.time(11, 30, 0), datetime.time(13, 00, 0), 
@@ -46,8 +45,7 @@ def ChangeIntoList_int(string):
 
 
 #获取学号，打开xlsx文件
-#userid=input('请输入学号，确保和xlsx文件名中的学号一致：')
-userid='2021212702'
+userid=input('请输入学号，确保和xlsx文件名中的学号一致：')
 WorkBook=openpyxl.load_workbook(filename=f"./学生个人课表_{userid}.xlsx")
 Sheet=WorkBook.active
 
@@ -72,14 +70,13 @@ print(Sheet['A2'].value[66:70])
 print("-------------------------")
 
 
-'''
+
 #输入学期的第一周的周一日期
-Start=datetime.datetime.strptime(input("输入学期的第一周的周一日期，以YYYY-MM-DD格式\n"), '%Y-%m-%d').date()
-while Start.isoweekday() != 1:
-    Start=datetime.datetime.strptime(input("日期并非周一！请以YYYY-MM-DD格式输入\n"), '%Y-%m-%d').date()
-print("正在处理，请稍等")
-'''
-StartDate=datetime.date(2023, 2, 20)
+StartDate=datetime.datetime.strptime(input("输入学期的第一周的周一日期，以YYYY-MM-DD格式\n"), '%Y-%m-%d').date()
+while StartDate.isoweekday() != 1:
+    StartDate=datetime.datetime.strptime(input("日期并非周一！请以YYYY-MM-DD格式输入\n"), '%Y-%m-%d').date()
+#StartDate=datetime.date(2023, 2, 20)
+print("正在处理，请稍候")
 
 #制作
 MyCalendar = icalendar.Calendar()
@@ -113,7 +110,7 @@ for Column in range(2, 9):
                 MyAlarm.add('DESCRIPTION', Course) #提醒内容：课程名称
                 MyEvent.add_component(MyAlarm)
                 MyCalendar.add_component(MyEvent)
-                print(f"添加周{Column-1}第{Row-3}节课的第{ListClassWeeks[j]}周课表成功")
+                #print(f"添加周{Column-1}第{Row-3}节课的第{ListClassWeeks[j]}周课表成功")
                 del MyAlarm
                 del MyEvent
             del TeacherName
@@ -122,7 +119,7 @@ for Column in range(2, 9):
             del LessonNum
             del Course
             del ListClassWeeks
-            print(f"-----------周{Column-1}第{Row-3}节课程导入完成-----------")
+            #print(f"-----------周{Column-1}第{Row-3}节课程导入完成-----------")
         del CellBR
 
 try:
