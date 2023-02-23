@@ -37,10 +37,10 @@ python TimeTable.py
 ## 有问题去提issue
 目前bug：  
 PC端Outlook正常识别全部课程  
-测试用iPhone 7 Plus无法正常识别，只显示一个事件(iOS15.7.3)
+测试用iPhone 7 Plus无法正常识别，只显示一个事件(iOS15.7.3)  
 测试用iPad Pro (11-inch) (Gen3)无法正常识别，只显示一个事件(iPadOS16.3.1)
 
-~没想到居然给iOS写的iOS无法正常识别，得去拷打一下Apple客服先~
+~没想到，本来想给iOS写的结果iOS无法正常识别，去拷打一下Apple客服先~
 
 
 ## 咕咕咕中：
