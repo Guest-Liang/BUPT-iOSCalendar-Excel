@@ -22,11 +22,11 @@ def GetElementIndex(char, string):
 #将上课周数转为list(int)
 def ChangeIntoList_int(string):
     if ("-" in string):
-        newstring=re.sub(r'[0-9]+', '', string)
+        NewString=re.sub(r'[0-9]+', '', string)
         string=string.replace("-",",")
         List=string.split(",")
         List=list(map(int, List))
-        HyphenIndex=GetElementIndex("-", newstring)
+        HyphenIndex=GetElementIndex("-", NewString)
         if len(HyphenIndex)==1:
             if(List[HyphenIndex[0]+1]-List[HyphenIndex[0]]>1):
                 for j in range(List[HyphenIndex[0]]+1,List[HyphenIndex[0]+1]):
@@ -45,8 +45,7 @@ def ChangeIntoList_int(string):
 
 
 #获取学号，打开xlsx文件
-#userid=input('请输入学号，确保和xlsx文件名中的学号一致：')
-userid=2021212702
+userid=input('请输入学号，确保和xlsx文件名中的学号一致：')
 WorkBook=openpyxl.load_workbook(filename=f"./学生个人课表_{userid}.xlsx")
 Sheet=WorkBook.active
 
@@ -62,14 +61,12 @@ SchoolYear=Sheet['A2'].value[5:16]
 
 
 #输入学期的第一周的周一日期
-#StartDate=datetime.datetime.strptime(input("输入学期的第一周的周一日期，以YYYY-MM-DD格式\n"), '%Y-%m-%d').date()
-#while StartDate.isoweekday() != 1:
-#    StartDate=datetime.datetime.strptime(input("日期并非周一！请以YYYY-MM-DD格式输入\n"), '%Y-%m-%d').date()
-StartDate=datetime.date(2023, 2, 20)
+StartDate=datetime.datetime.strptime(input("输入学期的第一周的周一日期，以YYYY-MM-DD格式\n"), '%Y-%m-%d').date()
+while StartDate.isoweekday() != 1:
+    StartDate=datetime.datetime.strptime(input("日期并非周一！请以YYYY-MM-DD格式输入\n"), '%Y-%m-%d').date()
+#StartDate=datetime.date(2023, 2, 20)
 print("正在处理，请稍候")
 NowTime=int(datetime.datetime.now().timestamp())
-
-
 
 
 MyCalendar = icalendar.Calendar()
@@ -96,7 +93,7 @@ for Column in range(2, 9):
                 MyEvent=icalendar.Event()
                 MyEvent.add('UID', f'BUPTCalendar@{StudentName}&{NowTime}')
                 MyEvent.add('SUMMARY', Course+' '+Classroom)
-                MyEvent.add('DTSTAMP',datetime.datetime.today())#.strftime("%Y%m%dT%H%M%SZ")
+                MyEvent.add('DTSTAMP',datetime.datetime.today())
                 MyEvent.add('ORGANIZER',f'{StudentName}')
                 MyEvent.add('DTSTART', datetime.datetime.combine(StartDate+datetime.timedelta(weeks=ListClassWeeks[j]-1)+datetime.timedelta(days=Column-2), StartTime[Row-4]))
                 MyEvent.add('DTEND', datetime.datetime.combine(StartDate+datetime.timedelta(weeks=ListClassWeeks[j]-1)+datetime.timedelta(days=Column-2), EndTime[Row-4]))
@@ -107,7 +104,6 @@ for Column in range(2, 9):
                 MyAlarm.add('DESCRIPTION', Course) #提醒内容：课程名称
                 MyEvent.add_component(MyAlarm)
                 MyCalendar.add_component(MyEvent)
-                #print(f"添加周{Column-1}第{Row-3}节课的第{ListClassWeeks[j]}周课表成功")
                 del MyAlarm
                 del MyEvent
             del TeacherName
@@ -116,30 +112,11 @@ for Column in range(2, 9):
             del LessonNum
             del Course
             del ListClassWeeks
-            #print(f"-----------周{Column-1}第{Row-3}节课程导入完成-----------")
         del CellBR
 try:
-    with open('TimeTable.ics', 'wb') as file:#f'TimeTable_Day{Column-1}.ics'
-        file.write(MyCalendar.to_ical())
-        print('[Success]')
-        del MyCalendar
-except Exception:
-    print("生成文件失败，请重试")  
-
-
-
-
-
-#这里是分散文件，按周
-    '''
-  
-try:#这里是整个文件
     with open('TimeTable.ics', 'wb') as file:
         file.write(MyCalendar.to_ical())
         print('[Success]')
         del MyCalendar
 except Exception:
-    print("生成文件失败，请重试") 
-
-
-    '''    
+    print("生成文件失败，请重试")
