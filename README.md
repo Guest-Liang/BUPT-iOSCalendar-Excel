@@ -18,10 +18,10 @@ pip install openpyxl
 ```python3
 python TimeTable.py
 ```
-<img src="https://github.com/Guest-Liang/BUPT-iOSCalendar-Excel/blob/main/ScrennShots/ExecuteTheCommand.png" width="500px">
-按提示输入你的学号，以及本学期第一周周一的日期
+<img src="https://github.com/Guest-Liang/BUPT-iOSCalendar-Excel/blob/main/ScrennShots/ExecuteTheCommand.png" width="500px">  
+按提示输入你的学号，以及本学期第一周周一的日期  
 
-看到最后的Success就说明成功了，ics文件生成在当前目录下
+看到最后的Success就说明成功了，ics文件生成在当前目录下  
 <img src="https://github.com/Guest-Liang/BUPT-iOSCalendar-Excel/blob/main/ScrennShots/Success.png" width="500px">
 
 
@@ -30,10 +30,18 @@ python TimeTable.py
 确保在添加到日历前全部检查一遍，不然手动删除会很麻烦！  
 确保在添加到日历前全部检查一遍，不然手动删除会很麻烦！  
 确保在添加到日历前全部检查一遍，不然手动删除会很麻烦！  
-有问题千万不要导入！否则删除非常麻烦！
+有问题千万不要导入！否则删除非常麻烦！  
+有问题千万不要导入！否则删除非常麻烦！  
+有问题千万不要导入！否则删除非常麻烦！  
 
 ## 有问题去提issue
-目前bug：PC端Outlook正常识别，测试用iPhone 7 Plus无法正常识别，只显示一个事件
+目前bug：  
+PC端Outlook正常识别全部课程  
+测试用iPhone 7 Plus无法正常识别，只显示一个事件(iOS15.7.3)
+测试用iPad Pro (11-inch) (Gen3)无法正常识别，只显示一个事件(iPadOS16.3.1)
+
+~没想到居然给iOS写的iOS无法正常识别，得去拷打一下Apple客服先~
+
 
 ## 咕咕咕中：
 1、将相邻两节课/三节课甚至更多的课合并为一个事件  
