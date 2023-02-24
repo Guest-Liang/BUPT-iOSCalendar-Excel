@@ -70,11 +70,13 @@ NowTime=int(datetime.datetime.now().timestamp())
 
 
 MyCalendar = icalendar.Calendar()
-MyCalendar.add('X-WR-CALNAME', f'{SchoolYear}') #新增日历名称，默认为学年
-MyCalendar.add('X-APPLE-CALENDAR-COLOR', '#E1FFFF') #日历颜色，可自己更改
-MyCalendar.add('X-WR-TIMEZONE', 'Asia/Shanghai')
+MyCalendar.add('X-WR-CALNAME', f'{SchoolYear}') #通用属性，日历名称，默认为学年
+MyCalendar.add('X-WR-TIMEZONE', 'Asia/Shanghai') #通用属性，指定时区
+MyCalendar.add('X-APPLE-CALENDAR-COLOR', '#E1FFFF') #Apple日历颜色，可自己更改
+MyCalendar.add('PRODID', '-//My calendar product//GL//')
 MyCalendar.add('VERSION', '2.0')
 MyCalendar.add('METHOD', 'PUBLISH')
+MyCalendar.add('CLASS', 'PUBLIC') #此属性定义日历组件的访问分类: "PUBLIC" / "PRIVATE" / "CONFIDENTIAL" / iana-token / x-name
 #制作
 for Column in range(2, 9):
     for Row in range(4, 18):
