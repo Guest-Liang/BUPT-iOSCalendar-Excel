@@ -69,14 +69,16 @@ print("正在处理，请稍候")
 NowTime=int(datetime.datetime.now().timestamp())
 
 
+
 MyCalendar = icalendar.Calendar()
+MyCalendar.add('PRODID', '-//MY_CALENDAR_PRODUCT//APPGENIX-SOFTWARE//')
+MyCalendar.add('VERSION', '2.0')
+MyCalendar.add('CALSCALE', 'GREGORIAN') #公历
+MyCalendar.add('METHOD', 'PUBLISH')
 MyCalendar.add('X-WR-CALNAME', f'{SchoolYear}') #通用属性，日历名称，默认为学年
 MyCalendar.add('X-WR-TIMEZONE', 'Asia/Shanghai') #通用属性，指定时区
-MyCalendar.add('X-APPLE-CALENDAR-COLOR', '#E1FFFF') #Apple日历颜色，可自己更改
-MyCalendar.add('PRODID', '-//My calendar product//GL//')
-MyCalendar.add('VERSION', '2.0')
-MyCalendar.add('METHOD', 'PUBLISH')
-MyCalendar.add('CLASS', 'PUBLIC') #此属性定义日历组件的访问分类: "PUBLIC" / "PRIVATE" / "CONFIDENTIAL" / iana-token / x-name
+#MyCalendar.add('X-APPLE-CALENDAR-COLOR', '#E1FFFF') #Apple日历颜色，可自己更改
+
 #制作
 for Column in range(2, 9):
     for Row in range(4, 18):
@@ -93,20 +95,22 @@ for Column in range(2, 9):
             ListClassWeeks=ChangeIntoList_int(ClassWeeks.replace("[周]",""))            
             for j in range(len(ListClassWeeks)):
                 MyEvent=icalendar.Event()
-                MyEvent.add('UID', f'BUPTCalendar@{StudentName}&{NowTime}')
+                #MyEvent.add('UID', f'BUPTCalendar&{NowTime}')
                 MyEvent.add('SUMMARY', Course+' '+Classroom)
                 MyEvent.add('DTSTAMP',datetime.datetime.today())
-                MyEvent.add('ORGANIZER',f'{StudentName}')
                 MyEvent.add('DTSTART', datetime.datetime.combine(StartDate+datetime.timedelta(weeks=ListClassWeeks[j]-1)+datetime.timedelta(days=Column-2), StartTime[Row-4]))
                 MyEvent.add('DTEND', datetime.datetime.combine(StartDate+datetime.timedelta(weeks=ListClassWeeks[j]-1)+datetime.timedelta(days=Column-2), EndTime[Row-4]))
-                MyEvent.add('DESCRIPTION', TeacherName) #教师姓名写在备注里
+                #MyEvent.add('DESCRIPTION', TeacherName) #教师姓名写在备注里
+                '''
                 MyAlarm=icalendar.Alarm()
                 MyAlarm.add('TRIGGER', datetime.timedelta(minutes=-10)) #提前10分钟提醒
                 MyAlarm.add('ACTION', "DISPLAY") #通知提醒
                 MyAlarm.add('DESCRIPTION', Course) #提醒内容：课程名称
-                MyEvent.add_component(MyAlarm)
+                MyEvent.add_component(MyAlarm)                
+                '''
+
                 MyCalendar.add_component(MyEvent)
-                del MyAlarm
+                #del MyAlarm
                 del MyEvent
             del TeacherName
             del ClassWeeks
