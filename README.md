@@ -35,7 +35,7 @@ python TimeTable.py
 有问题千万不要导入！否则删除非常麻烦！  
 
 # 有问题去提issue
-# 目前bug：  
+# 目前bug：暂无（issue等待中）  
 PC端Outlook正常识别全部课程  
 测试用iPhone 7 Plus正常识别(iOS15.7.3)  
 测试用iPad Pro (11-inch) (Gen3)正常识别(iPadOS16.3.1)
