@@ -61,23 +61,22 @@ SchoolYear=Sheet['A2'].value[5:16]
 
 
 #输入学期的第一周的周一日期
+#StartDate=datetime.date(2023, 2, 20)
 StartDate=datetime.datetime.strptime(input("输入学期的第一周的周一日期，以YYYY-MM-DD格式\n"), '%Y-%m-%d').date()
 while StartDate.isoweekday() != 1:
     StartDate=datetime.datetime.strptime(input("日期并非周一！请以YYYY-MM-DD格式输入\n"), '%Y-%m-%d').date()
-#StartDate=datetime.date(2023, 2, 20)
-print("正在处理，请稍候")
-NowTime=int(datetime.datetime.now().timestamp())
-
+print("正在处理")
+#NowTime=int(datetime.datetime.now().timestamp())
 
 
 MyCalendar = icalendar.Calendar()
-MyCalendar.add('PRODID', '-//MY_CALENDAR_PRODUCT//APPGENIX-SOFTWARE//')
-MyCalendar.add('VERSION', '2.0')
+MyCalendar.add('PRODID', '-//MY_CALENDAR_PRODUCT//GL//')
+MyCalendar.add('VERSION', '2.0') #固定属性，版本2.0
 MyCalendar.add('CALSCALE', 'GREGORIAN') #公历
 MyCalendar.add('METHOD', 'PUBLISH')
 MyCalendar.add('X-WR-CALNAME', f'{SchoolYear}') #通用属性，日历名称，默认为学年
 MyCalendar.add('X-WR-TIMEZONE', 'Asia/Shanghai') #通用属性，指定时区
-#MyCalendar.add('X-APPLE-CALENDAR-COLOR', '#E1FFFF') #Apple日历颜色，可自己更改
+MyCalendar.add('X-APPLE-CALENDAR-COLOR', '#E1FFFF') #Apple日历颜色，可自己更改，填入十六进制代码
 
 #制作
 for Column in range(2, 9):
@@ -100,17 +99,14 @@ for Column in range(2, 9):
                 MyEvent.add('DTSTAMP',datetime.datetime.today())
                 MyEvent.add('DTSTART', datetime.datetime.combine(StartDate+datetime.timedelta(weeks=ListClassWeeks[j]-1)+datetime.timedelta(days=Column-2), StartTime[Row-4]))
                 MyEvent.add('DTEND', datetime.datetime.combine(StartDate+datetime.timedelta(weeks=ListClassWeeks[j]-1)+datetime.timedelta(days=Column-2), EndTime[Row-4]))
-                #MyEvent.add('DESCRIPTION', TeacherName) #教师姓名写在备注里
-                '''
+                MyEvent.add('DESCRIPTION', TeacherName) #教师姓名写在备注里
                 MyAlarm=icalendar.Alarm()
                 MyAlarm.add('TRIGGER', datetime.timedelta(minutes=-10)) #提前10分钟提醒
                 MyAlarm.add('ACTION', "DISPLAY") #通知提醒
                 MyAlarm.add('DESCRIPTION', Course) #提醒内容：课程名称
                 MyEvent.add_component(MyAlarm)                
-                '''
-
                 MyCalendar.add_component(MyEvent)
-                #del MyAlarm
+                del MyAlarm
                 del MyEvent
             del TeacherName
             del ClassWeeks
