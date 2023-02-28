@@ -31,13 +31,13 @@ def ChangeIntoList_int(string):
             if(List[HyphenIndex[0]+1]-List[HyphenIndex[0]]>1):
                 for j in range(List[HyphenIndex[0]]+1,List[HyphenIndex[0]+1]):
                     List.append(j)
-            List.sort(reverse = False)
+            List.sort(reverse=False)
         else:
             for i in range(len(HyphenIndex)-1):
                 if(List[HyphenIndex[i]+1]-List[HyphenIndex[i]]>1):
                     for j in range(List[HyphenIndex[i]]+1,List[HyphenIndex[i]+1]):
                         List.append(j)
-                List.sort(reverse = False)
+                List.sort(reverse=False)
     else:
         List=string.split(",")
         List=list(map(int, List))
@@ -45,13 +45,13 @@ def ChangeIntoList_int(string):
 
 
 #获取学号，打开xlsx文件
-userid=2021212702
-#userid=input('请输入学号，确保和xlsx文件名中的学号一致：')
+userid=input('请输入学号，确保和xlsx文件名中的学号一致：')
 WorkBook=openpyxl.load_workbook(filename=f"./学生个人课表_{userid}.xlsx")
 Sheet=WorkBook.active
 
-print("您的信息为：")
 print("-------------------------")
+print("您的信息为：")
+
 print("课程表所属人：", end="")
 print(Sheet['A1'].value.replace("北京邮电大学 ","").replace(" 学生个人课表",""))
 StudentName=Sheet['A1'].value.replace("北京邮电大学 ","").replace(" 学生个人课表","")
@@ -62,12 +62,12 @@ SchoolYear=Sheet['A2'].value[5:16]
 
 
 #输入学期的第一周的周一日期
-StartDate=datetime.date(2023, 2, 20)
-#StartDate=datetime.datetime.strptime(input("输入学期的第一周的周一的日期，以YYYY-MM-DD格式\n"), '%Y-%m-%d').date()
-#while StartDate.isoweekday() != 1:
-#    StartDate=datetime.datetime.strptime(input("日期并非周一！请以YYYY-MM-DD格式输入\n"), '%Y-%m-%d').date()
+#StartDate=datetime.date(2023, 2, 20)
+StartDate=datetime.datetime.strptime(input("输入学期的第一周的周一的日期，以YYYY-MM-DD格式\n"), '%Y-%m-%d').date()
+while StartDate.isoweekday() != 1:
+    StartDate=datetime.datetime.strptime(input("日期并非周一！请以YYYY-MM-DD格式输入\n"), '%Y-%m-%d').date()
 print("正在处理")
-#NowTime=int(datetime.datetime.now().timestamp())
+
 
 #制作部分
 MyCalendar=icalendar.Calendar()
