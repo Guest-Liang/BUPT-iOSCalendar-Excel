@@ -35,13 +35,11 @@ python TimeTable.py
 有问题千万不要导入！否则删除非常麻烦！  
 
 # 有问题去提issue
-# 目前bug：暂无（issue等待中）  
-PC端Outlook正常识别全部课程  
-测试用iPhone 7 Plus正常识别(iOS15.7.3)  
-测试用iPad Pro (11-inch) (Gen3)正常识别(iPadOS16.3.1)
+# 目前bug：（issue等待中）  
+iOS不能识别私有属性中的颜色，导致`X-APPLE-CALENDAR-COLOR`这一项参数无效
 
 
 ## 咕咕咕中：
-1、将相邻两节课/三节课甚至更多的课合并为一个事件  
+1、将相邻两节课/三节课甚至更多的课合并为一个事件（貌似解决了，待验证  
 2、正在考虑实现利用学号、web登录、教务密码直接从教务系统中获取课程表（咕咕咕）  
 3、One more thing…  
