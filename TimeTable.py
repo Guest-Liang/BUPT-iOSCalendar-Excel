@@ -18,31 +18,12 @@ EndTime=[datetime.time(8, 45, 0), datetime.time(9, 35, 0), datetime.time(10, 35,
 #找到字符串中某个关键值的所有索引，存放在list(int)中
 def GetElementIndex(char, string):
     return [idx.start() for idx in re.finditer(char, string)]
-
 #将上课周数转为list(int)
-def ChangeIntoList_int(string):
-    if ("-" in string):
-        NewString=re.sub(r'[0-9]+', '', string)
-        string=string.replace("-",",")
-        List=string.split(",")
-        List=list(map(int, List))
-        HyphenIndex=GetElementIndex("-", NewString)
-        if len(HyphenIndex)==1:
-            if(List[HyphenIndex[0]+1]-List[HyphenIndex[0]]>1):
-                for j in range(List[HyphenIndex[0]]+1,List[HyphenIndex[0]+1]):
-                    List.append(j)
-            List.sort(reverse=False)
-        else:
-            for i in range(len(HyphenIndex)-1):
-                if(List[HyphenIndex[i]+1]-List[HyphenIndex[i]]>1):
-                    for j in range(List[HyphenIndex[i]]+1,List[HyphenIndex[i]+1]):
-                        List.append(j)
-                List.sort(reverse=False)
-    else:
-        List=string.split(",")
-        List=list(map(int, List))
-    return List
-
+def ChangeIntoList_int(s):
+    ranges = re.findall(r'(\d+)-(\d+)', s)
+    for start, end in ranges:
+        s = s.replace(f'{start}-{end}', ','.join(map(str, range(int(start), int(end)+1))))
+    return list(map(int, s.split(',')))
 
 #获取学号，打开xlsx文件
 userid=input('请输入学号，确保和xlsx文件名中的学号一致：')
@@ -51,15 +32,12 @@ Sheet=WorkBook.active
 
 print("-------------------------")
 print("您的信息为：")
-
 print("课程表所属人：", end="")
 print(Sheet['A1'].value.replace("北京邮电大学 ","").replace(" 学生个人课表",""))
 StudentName=Sheet['A1'].value.replace("北京邮电大学 ","").replace(" 学生个人课表","")
-
 print("学年：",end="")
 print(Sheet['A2'].value[5:16])
 SchoolYear=Sheet['A2'].value[5:16]
-
 
 #输入学期的第一周的周一日期
 #StartDate=datetime.date(2023, 2, 20)
@@ -107,14 +85,8 @@ for Column in range(2, 9):
                     MyAlarm.add('DESCRIPTION', Course) #提醒内容：课程名称
                     MyEvent.add_component(MyAlarm)
                     MyCalendar.add_component(MyEvent)
-                    del MyAlarm
-                    del MyEvent
-                del TeacherName
-                del ClassWeeks
-                del Classroom
-                del LessonNum
-                del Course
-                del ListClassWeeks
+                    del MyAlarm, MyEvent
+                del TeacherName, ClassWeeks, Classroom, LessonNum, Course, ListClassWeeks
         del CellBR
 try:
     with open('TimeTable.ics', 'wb') as file:
