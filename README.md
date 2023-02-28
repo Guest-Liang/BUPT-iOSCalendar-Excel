@@ -3,18 +3,18 @@
 
 ## 使用方法
 ### 第一步
-需要`>python3.10`环境，并且配置好环境变量等，确保`Powershell`中输入`python`能出现版本号并进入python环境。如果已经配置好，在`cmd`或者`PowerShell`运行以下代码，安装需要的库：
+需要`高于python3.10`的`python`环境，并且配置好环境变量等，确保`Powershell`中输入`python`能出现版本号并进入python环境。如果已经配置好，在`cmd`或者`PowerShell`运行以下代码，安装需要的库：
 ```python3
 pip install icalendar
 pip install openpyxl
 ```
 ### 第二步
-从你的北邮教务里下载Excel版个人课程表，文件名为“学生个人课表_{你的学号}.xls”。  
-在Excel中将其另存为为xlsx格式，保存后你的文件名应该是“学生个人课表_{你的学号}.xlsx”
+从你的北邮教务里下载Excel版个人课程表，文件名为“学生个人课表_{你的学号}.xls”  
+在Excel中将其另存为为xlsx格式，保存后你的文件名应该是“学生个人课表_{你的学号}.xlsx”   
 <img src="https://github.com/Guest-Liang/BUPT-iOSCalendar-Excel/blob/main/ScrennShots/GetExcelFile.png" width="500px">
 
 ### 第三步
-下载`TimeTable.py`文件，将`学生个人课表_{你的学号}.xlsx`文件和`TimeTable.py`文件放在同一个目录下，在空白处右键“在终端中打开”，或者打开`Powershell`，进入管理员模式，执行
+在右边的`release`下载`TimeTable.py`文件，将`学生个人课表_{你的学号}.xlsx`文件和`TimeTable.py`文件放在同一个目录下，在空白处右键“在终端中打开”，或者打开`Powershell`，进入管理员模式，执行
 ```python3
 python TimeTable.py
 ```
@@ -22,24 +22,23 @@ python TimeTable.py
 按提示输入你的学号，以及本学期第一周周一的日期  
 
 看到最后的Success就说明成功了，ics文件生成在当前目录下  
-<img src="https://github.com/Guest-Liang/BUPT-iOSCalendar-Excel/blob/main/ScrennShots/Success.png" width="500px">
+<img src="https://github.com/Guest-Liang/BUPT-iOSCalendar-Excel/blob/main/ScrennShots/Success.png" width="500px">   
+如果失败了请在issue中提出，并附上你的xlsx文件，以及所使用的python版本号等一切必要的信息   
 
 
 ### 第四步
 得到的`ics文件`导入Apple设备中即可使用。  
-确保在添加到日历前全部检查一遍，不然手动删除会很麻烦！  
-确保在添加到日历前全部检查一遍，不然手动删除会很麻烦！  
-确保在添加到日历前全部检查一遍，不然手动删除会很麻烦！  
+推荐添加到一个新的日历：以学年命名或者学习，这样万一添加错误还可以通过删除整个日历来重新添加，不需要一个个手动删除   
+可以在添加的时候选择新建日历，也可以在日历中新建好再打开ics文件   
+确保在添加到日历前全部检查一遍，不然需要重新添加   
 有问题千万不要导入！否则删除非常麻烦！  
-有问题千万不要导入！否则删除非常麻烦！  
-有问题千万不要导入！否则删除非常麻烦！  
+
 
 # 有问题去提issue
 # 目前bug：（issue等待中）  
-iOS不能识别私有属性中的颜色，导致`X-APPLE-CALENDAR-COLOR`这一项参数无效
+iOS & iPadOS不能识别私有属性中的颜色，导致`X-APPLE-CALENDAR-COLOR`这一项参数无效
 
 
 ## 咕咕咕中：
-1、将相邻两节课/三节课甚至更多的课合并为一个事件（貌似解决了，待验证  
-2、正在考虑实现利用学号、web登录、教务密码直接从教务系统中获取课程表（咕咕咕）  
-3、One more thing…  
+1、正在考虑实现利用学号、web登录、教务密码直接从教务系统中获取课程表（咕咕咕……）   
+2、One more thing…  
