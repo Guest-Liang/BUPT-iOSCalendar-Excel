@@ -76,8 +76,8 @@ for Column in range(2, 9):
                     MyEvent=icalendar.Event()
                     MyEvent.add('SUMMARY', Course+' '+Classroom) #事件名称：课程名加教室
                     MyEvent.add('DTSTAMP', datetime.datetime.today())
-                    MyEvent.add('DTSTART', datetime.datetime.combine(StartDate+datetime.timedelta(weeks=ListClassWeeks[j]-1)+datetime.timedelta(days=Column-2), StartTime[ListLessonNum[0]-1]))
-                    MyEvent.add('DTEND', datetime.datetime.combine(StartDate+datetime.timedelta(weeks=ListClassWeeks[j]-1)+datetime.timedelta(days=Column-2), EndTime[ListLessonNum[-1]-1]))
+                    MyEvent.add('DTSTART', datetime.datetime.combine(StartDate+datetime.timedelta(weeks=ListClassWeeks[j]-1,days=Column-2), StartTime[ListLessonNum[0]-1]))
+                    MyEvent.add('DTEND', datetime.datetime.combine(StartDate+datetime.timedelta(weeks=ListClassWeeks[j]-1,days=Column-2), EndTime[ListLessonNum[-1]-1]))
                     MyEvent.add('DESCRIPTION', TeacherName) #教师姓名写在备注里
                     MyAlarm=icalendar.Alarm() #添加提醒作为事件的附加属性
                     MyAlarm.add('TRIGGER', datetime.timedelta(minutes=-10)) #提前10分钟提醒
