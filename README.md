@@ -24,8 +24,8 @@ pip install openpyxl -i https://pypi.tuna.tsinghua.edu.cn/simple
 ```python3
 python TimeTable.py
 ```
-<img src="https://github.com/Guest-Liang/BUPT-iOSCalendar-Excel/blob/main/ScrennShots/ExecuteTheCommand.png" width="500px">  
-`按提示输入你的学号，以及本学期第一周周一的日期`  
+<img src="https://github.com/Guest-Liang/BUPT-iOSCalendar-Excel/blob/main/ScrennShots/ExecuteTheCommand.png" width="500px">   
+`按提示输入你的学号，以及本学期第一周周一的日期``TimeTable.py`  
 
 看到最后的Success就说明成功了，ics文件生成在当前目录下  
 <img src="https://github.com/Guest-Liang/BUPT-iOSCalendar-Excel/blob/main/ScrennShots/Success.png" width="500px">   
