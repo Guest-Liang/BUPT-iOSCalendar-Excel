@@ -10,8 +10,7 @@ StartTime = [datetime.time(8, 0, 0), datetime.time(8, 50, 0), datetime.time(9, 5
     datetime.time(16, 35, 0), datetime.time(17, 25, 0), datetime.time(18, 30, 0), 
     datetime.time(19, 20, 0), datetime.time(20, 10, 0)]
 #定义课程结束时间
-EndTime = [
-    datetime.time(8, 45, 0), datetime.time(9, 35, 0), datetime.time(10, 35, 0), 
+EndTime = [datetime.time(8, 45, 0), datetime.time(9, 35, 0), datetime.time(10, 35, 0), 
     datetime.time(11, 25, 0), datetime.time(12, 15, 0), datetime.time(13, 45, 0), 
     datetime.time(14, 35, 0), datetime.time(15, 30, 0), datetime.time(16, 25, 0), 
     datetime.time(17, 20, 0), datetime.time(18, 10, 0), datetime.time(19, 15, 0), 
@@ -28,7 +27,6 @@ def ChangeIntoList_int(s):
         s = s.replace(f'{start}-{end}', ','.join(map(str, range(int(start), int(end) + 1))))
     return list(map(int, s.split(',')))
 
-
 #获取学号，打开xlsx文件
 userid = input('请输入学号，确保和xlsx文件名中的学号一致：')
 WorkBook = openpyxl.load_workbook(filename=f"./学生个人课表_{userid}.xlsx")
@@ -37,11 +35,11 @@ Sheet = WorkBook.active
 print("-------------------------")
 print("您的信息为：")
 print("课程表所属人：", end="")
-print(Sheet['A1'].value.replace("北京邮电大学 ", "").replace(" 学生个人课表", ""))
 StudentName = Sheet['A1'].value.replace("北京邮电大学 ", "").replace(" 学生个人课表", "")
+print(StudentName)
 print("学年：", end="")
-print(Sheet['A2'].value[5:16])
 SchoolYear = Sheet['A2'].value[5:16]
+print(SchoolYear)
 
 #输入学期的第一周的周一日期
 #StartDate=datetime.date(2023, 2, 20)
@@ -58,7 +56,7 @@ MyCalendar.add('CALSCALE', 'GREGORIAN')  #公历
 MyCalendar.add('METHOD', 'PUBLISH')
 MyCalendar.add('X-WR-CALNAME', f'{SchoolYear}')  #通用属性，日历名称，默认为学年
 MyCalendar.add('X-WR-TIMEZONE', 'Asia/Shanghai')  #通用属性，指定时区
-MyCalendar.add('X-APPLE-CALENDAR-COLOR', '#E1FFFF')  #Apple日历颜色，可自己更改，填入十六进制代码
+MyCalendar.add('X-APPLE-CALENDAR-COLOR', '#E1FFFF')  #私有属性，指定Apple日历颜色，可自己更改，填入十六进制代码
 for Column in range(2, 9):
     for Row in range(4, 18):
         CellBR = GetElementIndex("\n", Sheet.cell(row=Row, column=Column).value)
@@ -92,7 +90,7 @@ for Column in range(2, 9):
                 del TeacherName, ClassWeeks, Classroom, LessonNum, Course, ListClassWeeks
         del CellBR
 try:
-    with open('TimeTable.ics', 'wb') as file:
+    with open(f'TimeTable_{StudentName}.ics', 'wb') as file:
         file.write(MyCalendar.to_ical())
         print('[Success]')
         del MyCalendar
