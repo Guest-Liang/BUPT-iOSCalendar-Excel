@@ -7,7 +7,13 @@
 ```python3
 pip install icalendar
 pip install openpyxl
+```   
+连接不上可使用清华源：
+```python3
+pip install icalendar -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install openpyxl -i https://pypi.tuna.tsinghua.edu.cn/simple
 ```
+
 ### 第二步
 从你的北邮教务里下载Excel版个人课程表，文件名为“学生个人课表_{你的学号}.xls”  
 在Excel中将其另存为为xlsx格式，保存后你的文件名应该是“学生个人课表_{你的学号}.xlsx”   
@@ -29,7 +35,7 @@ python TimeTable.py
 ### 第四步
 得到的`ics文件`导入Apple设备中即可使用。  
 推荐添加到一个新的日历：以学年命名或者学习，这样万一添加错误还可以通过删除整个日历来重新添加，不需要一个个手动删除   
-可以在添加的时候选择新建日历，也可以在日历中新建好再打开ics文件   
+建议在本地日历中新建好日历再打开ics文件添加   
 确保在添加到日历前全部检查一遍，不然需要重新添加   
 有问题千万不要导入！否则删除非常麻烦！  
 
@@ -41,4 +47,4 @@ iOS & iPadOS不能识别私有属性中的颜色，导致`X-APPLE-CALENDAR-COLOR
 
 ## 咕咕咕中：
 1、正在考虑实现利用学号、web登录、教务密码直接从教务系统中获取课程表（咕咕咕……）   
-2、One more thing…  
+2、One more thing……（开发直接登录版中……）  
