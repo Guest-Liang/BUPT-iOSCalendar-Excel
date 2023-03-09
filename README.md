@@ -1,5 +1,5 @@
 # BUPT-iOSCalendar-Excel
-使用从北邮教务系统中导出的Excel版课程表创建ics格式的日历，导入到Apple设备中 【~持续更新bug中~】
+使用从北邮教务系统中导出的Excel版课程表创建ics格式的日历，导入到Apple设备中 【维护中，有问题提issue，看到会解决】
 
 ## 使用方法
 ### 第一步
@@ -20,12 +20,12 @@ pip install openpyxl -i https://pypi.tuna.tsinghua.edu.cn/simple
 <img src="https://github.com/Guest-Liang/BUPT-iOSCalendar-Excel/blob/main/ScrennShots/GetExcelFile.png" width="500px">
 
 ### 第三步
-在右边的`release`下载`TimeTable.py`文件，将`学生个人课表_{你的学号}.xlsx`文件和`TimeTable.py`文件放在同一个目录下，在空白处右键“在终端中打开”，或者打开`Powershell`，进入管理员模式，执行
+在GitHub页面右边的`release`下载`TimeTable.py`文件，将`学生个人课表_{你的学号}.xlsx`文件和`TimeTable.py`文件放在同一个目录下，在当前目录空白处右键“在终端中打开”，或者打开`Powershell`，进入管理员模式，执行
 ```python3
 python TimeTable.py
 ```
 <img src="https://github.com/Guest-Liang/BUPT-iOSCalendar-Excel/blob/main/ScrennShots/ExecuteTheCommand.png" width="500px">  
-按提示输入你的学号，以及本学期第一周周一的日期  
+`按提示输入你的学号，以及本学期第一周周一的日期`  
 
 看到最后的Success就说明成功了，ics文件生成在当前目录下  
 <img src="https://github.com/Guest-Liang/BUPT-iOSCalendar-Excel/blob/main/ScrennShots/Success.png" width="500px">   
@@ -33,18 +33,18 @@ python TimeTable.py
 
 
 ### 第四步
-得到的`ics文件`导入Apple设备中即可使用。  
+得到的带有名字的`ics文件`导入Apple设备中即可使用。  
 推荐添加到一个新的日历：以学年命名或者学习，这样万一添加错误还可以通过删除整个日历来重新添加，不需要一个个手动删除   
-建议在本地日历中新建好日历再打开ics文件添加   
+**建议在日历中新建好新的日历再打开ics文件添加**   
 确保在添加到日历前全部检查一遍，不然需要重新添加   
-有问题千万不要导入！否则删除非常麻烦！  
+有问题千万不要导入！  
 
 
-# 有问题去提issue
-# 目前bug：（issue等待中）  
-iOS & iPadOS不能识别私有属性中的颜色，导致`X-APPLE-CALENDAR-COLOR`这一项参数无效
+# 有问题去提issue（等待中）
+# 目前bug：  
+iOS & iPadOS不能识别私有属性中的颜色，导致`X-APPLE-CALENDAR-COLOR`这一项参数无效   
 
 
 ## 咕咕咕中：
-1、正在考虑实现利用学号、web登录、教务密码直接从教务系统中获取课程表（咕咕咕……）   
-2、One more thing……（开发直接登录版中……）  
+1、正在考虑实现利用学号、web登录、教务密码直接从教务系统中获取课程表（开发中……但是咕咕咕）   
+2、One more thing……  
