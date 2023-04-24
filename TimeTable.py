@@ -4,17 +4,21 @@ import icalendar
 import openpyxl
 
 #定义课程开始时间
-StartTime = [datetime.time(8, 0, 0), datetime.time(8, 50, 0), datetime.time(9, 50, 0), 
+StartTime = [
+    datetime.time(8, 0, 0),   datetime.time(8, 50, 0),  datetime.time(9, 50, 0), 
     datetime.time(10, 40, 0), datetime.time(11, 30, 0), datetime.time(13, 00, 0), 
     datetime.time(13, 50, 0), datetime.time(14, 45, 0), datetime.time(15, 40, 0), 
     datetime.time(16, 35, 0), datetime.time(17, 25, 0), datetime.time(18, 30, 0), 
-    datetime.time(19, 20, 0), datetime.time(20, 10, 0)]
+    datetime.time(19, 20, 0), datetime.time(20, 10, 0)
+]
 #定义课程结束时间
-EndTime = [datetime.time(8, 45, 0), datetime.time(9, 35, 0), datetime.time(10, 35, 0), 
+EndTime = [
+    datetime.time(8, 45, 0),  datetime.time(9, 35, 0),  datetime.time(10, 35, 0), 
     datetime.time(11, 25, 0), datetime.time(12, 15, 0), datetime.time(13, 45, 0), 
     datetime.time(14, 35, 0), datetime.time(15, 30, 0), datetime.time(16, 25, 0), 
     datetime.time(17, 20, 0), datetime.time(18, 10, 0), datetime.time(19, 15, 0), 
-    datetime.time(20, 5, 0), datetime.time(20, 55, 0)]
+    datetime.time(20, 5, 0),  datetime.time(20, 55, 0)
+]
 
 #找到字符串中某个关键值的所有索引，存放在list(int)中
 def GetElementIndex(char, string):

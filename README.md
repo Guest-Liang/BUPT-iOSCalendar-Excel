@@ -1,5 +1,5 @@
 # BUPT-iOSCalendar-Excel
-使用从北邮教务系统中导出的Excel版课程表创建ics格式的日历，导入到Apple设备中 【维护中，有问题提issue，看到会解决】
+使用从北邮教务系统中导出的Excel版课程表创建ics格式的日历【目前仅维护，有问题提issue，看到会解决】   
 
 ## 使用方法
 ### 第一步
@@ -8,7 +8,7 @@
 pip install icalendar
 pip install openpyxl
 ```   
-连接不上可使用清华源：
+连接不上或速度过慢可使用清华源：
 ```python3
 pip install icalendar -i https://pypi.tuna.tsinghua.edu.cn/simple
 pip install openpyxl -i https://pypi.tuna.tsinghua.edu.cn/simple
@@ -41,11 +41,10 @@ python TimeTable.py
 有问题千万不要导入！  
 
 
-# 有问题去提issue（等待中）
 # 目前bug：  
 iOS & iPadOS不能识别私有属性中的颜色，导致`X-APPLE-CALENDAR-COLOR`这一项参数无效   
 
 
-## 咕咕咕中：
-1、正在考虑实现利用学号、web登录、教务密码直接从教务系统中获取课程表（开发中……但是咕咕咕）   
-2、One more thing……  
+## One more thing……：
+1、什么？你还在用古老的excel版本？快去使用最新的web版吧！https://github.com/Guest-Liang/BUPT-iOSCalendar-Web   
+2、当然，如果web版连接不到教务，那么也是可以自己获取excel然后来用excel版的   
