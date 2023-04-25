@@ -1,5 +1,7 @@
 # BUPT-iOSCalendar-Excel
 使用从北邮教务系统中导出的Excel版课程表创建ics格式的日历【目前仅维护，有问题提issue，看到会解决】   
+**所需环境：**
+[![python](https://img.shields.io/badge/Python-%3E%3D3.10-%2373C549)](https://img.shields.io/badge/Python-%3E%3D3.10-%2373C549)
 
 ## 使用方法
 ### 第一步
